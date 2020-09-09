@@ -117,42 +117,7 @@ class Router {
 	public static function is_graphql_http_request() {
 
 		// Default is false
-		$is_graphql_http_request = false;
-
-		// Support wp-graphiql style request to /index.php?graphql.
-		if ( isset( $_GET[ self::$route ] ) ) {
-			$is_graphql_http_request = true;
-		}
-
-		/**
-		 * Filter whether the request is a GraphQL HTTP Request. Default is false, as the majority
-		 * of WordPress requests are NOT GraphQL requests (at least today that's true 😆).
-		 *
-		 * The request has to "prove" that it is indeed an HTTP request via HTTP for
-		 * this to be true.
-		 *
-		 * Different servers _might_ have different needs to determine whether a request
-		 * is a GraphQL request.
-		 *
-		 * @param boolean $is_graphql_http_request Whether the request is a GraphQL HTTP Request. Default false.
-		 */
-		$is_graphql_http_request = apply_filters( 'graphql_is_graphql_http_request', $is_graphql_http_request );
-
-		/**
-		 * If true, return right away. This allows custom code to
-		 * define graphql requests if their definition doesn't match the standard
-		 * definition.
-		 */
-		if ( true === $is_graphql_http_request ) {
-			return $is_graphql_http_request;
-		}
-
-		// Check the server to determine if the GraphQL endpoint is being requested
-		if ( isset( $_SERVER['SERVER_NAME'] ) && isset( $_SERVER['REQUEST_URI'] ) ) {
-			$is_graphql_http_request = strpos($_SERVER['REQUEST_URI'], 'wp/graphql) !== false;
-		}
-
-		return $is_graphql_http_request;
+		$is_graphql_http_request = true;
 	}
 
 	/**
